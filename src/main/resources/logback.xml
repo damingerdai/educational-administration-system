@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<property scope="context" name="log_path" value="${log.path}/logs" />
+	<property scope="context" name="context_name" value="${log.context.name}" /> 
+	
+	<jmxConfigurator />
+	
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度，%msg：日志消息，%n是换行符--> 
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} -%method - [%X{logback}] - %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${log_path}/${context_name}/${context_name}.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${log_path}/${context_name}_%d{yyyy-MM-dd}.zip</fileNamePattern>
+			<maxHistory>90</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36} -%method - [%X{logback}] - %msg%n</pattern>
+			<charset>UTF-8</charset> 
+		</encoder>
+	</appender>
+	
+	<!-- ******************************************短信发送日志****************************************** -->
+	<!-- 发送日志 -->
+	<appender name="repeaterFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${log_path}/${context_name}/ufs_log_file.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${log_path}/${context_name}/ufs_log_file_%d{yyyy-MM-dd}.zip</fileNamePattern>
+			<maxHistory>90</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} - %msg%n</pattern>
+			<charset>UTF-8</charset> 
+		</encoder>
+	</appender>
+	<logger name="repeater" level="INFO" additivity="false">
+		<appender-ref ref="repeaterFile" />
+	</logger>
+	
+	<logger name="org.springframework.jdbc.core.StatementCreatorUtils" level="INFO" additivity="false">
+        <appender-ref ref="rollingFile" />
+    </logger>
+	<logger name="org.springframework.jdbc.core.StatementCreatorUtils" level="INFO" additivity="false">
+        <appender-ref ref="rollingFile" />
+    </logger>
+    <logger name="org.springframework.jdbc.core" additivity="true">
+        <level value="INFO" />
+        <appender-ref ref="rollingFile" />
+    </logger>
+    <logger name="java.sql.Connection" additivity="true">
+        <level value="INFO" />
+        <appender-ref ref="rollingFile" />
+    </logger>
+    <logger name="java.sql.Statement" additivity="true">
+        <level value="INFO" />
+        <appender-ref ref="rollingFile" />
+    </logger>
+    <logger name="java.sql.PreparedStatement" additivity="true">
+        <level value="INFO" />
+        <appender-ref ref="rollingFile" />
+    </logger>
+    <logger name="java.sql.ResultSet" additivity="true">
+        <level value="INFO" />
+        <appender-ref ref="rollingFile" />
+    </logger>
+	
+	<root level="INFO">
+	    <appender-ref ref="console"/>
+		<appender-ref ref="rollingFile" />
+	</root>
+</configuration>
