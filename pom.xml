@@ -11,10 +11,12 @@
 	<properties>
 		<spring.version>4.3.5.RELEASE</spring.version>
 		<spring.security.version>4.1.2.RELEASE</spring.security.version>
+		
+		<jdk.version>1.6</jdk.version>
 	</properties>
 
 	<dependencies>
-		
+
 		<!-- ******************** Spring Security Begin ********************** -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -31,11 +33,11 @@
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>${spring.security.version}</version>
 		</dependency>
-		 <dependency>
+		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
 			<version>${spring.security.version}</version>
-		</dependency>  
+		</dependency>
 		<!-- ******************** Spring Security End ********************** -->
 
 		<!-- ******************** Spring Begin ********************** -->
@@ -146,6 +148,19 @@
 			<artifactId>commons-logging</artifactId>
 			<version>1.1.1</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.microsoft.sqlserver</groupId>
+			<artifactId>sqljdbc4</artifactId>
+			<version>4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>c3p0</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>0.9.1</version>
+		</dependency>
+
+
 	</dependencies>
 	<build>
 		<finalName>cjcx</finalName>
@@ -164,6 +179,18 @@
 			</resource>
 		</resources>
 		<sourceDirectory>src/main/java</sourceDirectory>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+					<showWarnings>true</showWarnings>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
 
 
