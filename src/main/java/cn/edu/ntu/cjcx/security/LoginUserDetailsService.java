@@ -15,6 +15,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public class LoginUserDetailsService extends JdbcDaoSupport implements UserDetailsService {
 
+	/**
+	 * ¼ÓÒ»µã×¢ÊÍ
+	 */
 	private JdbcTemplate jdbcTemplate;
 
 	@Override
